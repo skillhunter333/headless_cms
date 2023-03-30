@@ -1,8 +1,5 @@
-import "./styles.css";
 import { useState, useEffect } from "react";
 import useContentful from "./useContentful";
-
-//Test
 
 export default function App() {
   const [recipes, setRecipes] = useState([]);
@@ -11,9 +8,9 @@ export default function App() {
   useEffect(() => {
     getRecipes().then((response) => setRecipes(response));
   }, []);
-
+  console.log(recipes)
   return (
-    <div className="App">
+    <div className="App" >
       <h1>Contentful Example</h1>
 
       {!recipes
@@ -21,8 +18,10 @@ export default function App() {
         : recipes.map((item) => {
             return (
               <div>
-                <h1>{item.title}</h1>
-                <p>{item.description}</p>
+                <h1>{item.recipeTitle}</h1>
+                
+                <img src={item.smothieImage.fields.file.url} alt="whatever" className="image"/>
+                <p>{item.recipeDiscription}</p>
               </div>
             );
           })}
