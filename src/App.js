@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import { useState, useEffect } from "react";
+import useContentful from "./useContentful";
 
-function App() {
+//Test
+
+export default function App() {
+  const [recipes, setRecipes] = useState([]);
+  const { getRecipes } = useContentful();
+
+  useEffect(() => {
+    getRecipes().then((response) => setRecipes(response));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Contentful Example</h1>
+
+      {!recipes
+        ? "...loading"
+        : recipes.map((item) => {
+            return (
+              <div>
+                <h1>{item.title}</h1>
+                <p>{item.description}</p>
+              </div>
+            );
+          })}
     </div>
   );
 }
-
-export default App;
